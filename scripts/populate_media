@@ -1,0 +1,21 @@
+#!/bin/bash
+
+media="$HOME/arcade_media"
+
+
+for zip in *.zip ; do
+	base=$(basename "$zip" .zip)
+	marquee="$media/marquees/$base"
+	video="$media/video/$base-video.mp4"
+	target="images/$base-marquee"
+
+	if [ -f "$marquee.png" ]; then
+		cp -v "$marquee.png" "$target.png"
+	elif [ -f "$marquee.jpg" ]; then
+		cp -v "$marquee.jpg" "$target.jpg"
+	fi  2> /dev/null
+	
+	if [ -f "$video" ]; then
+		echo cp -vn $video images/
+	fi
+done

@@ -1,0 +1,31 @@
+#!/bin/bash
+
+if [ ! "$1" ]; then
+	echo "extension?"
+	exit 1
+fi
+
+maxJobs=2
+
+waitJobs() {
+	[ "$(jobs | wc -l)" -lt "$maxJobs" ]
+}
+
+doCompress() {
+		du -sh "$o"
+		(7z -bd -mx=9 a "$n" "$o" && rm -f "$o") > /dev/null
+		du -sh "$n"
+}
+
+for o in *.$1 ; do
+	n="$(sed "s/$1$/7z/" <<< "$o")"
+	while ! waitJobs ; do
+		sleep .1
+	done
+	if [ ! -f "$n" ]; then
+		doCompress &
+	fi
+done
+
+
+wait

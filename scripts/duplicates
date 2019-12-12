@@ -1,0 +1,10 @@
+#!/bin/bash
+
+cut -d'"' -f2 gamelist.txt | \
+cut -d'(' -f1 | \
+sed 's/ $//' | \
+sort | \
+uniq -c  | \
+sort -nbr | \
+head -$[ $LINES - 2 ] | \
+sort -k 2

@@ -1,0 +1,35 @@
+#!/bin/bash
+
+
+#platformDir="$1"
+
+mediaDir=$HOME/RetroPie/media/arcade
+
+mkdir -pv $mediaDir
+
+for platformDir in $@ ; do
+	if [ -d "$platformDir" ]; then
+		/opt/retropie/supplementary/scraper/scraper \
+			-img_format png \
+				-image_dir $mediaDir/image \
+				-image_path $mediaDir/image \
+			-download_videos \
+				-convert_videos \
+				-video_dir $mediaDir/video \
+				-video_path $mediaDir/video \
+			-download_marquees \
+				-marquee_dir $mediaDir/marquee \
+				-marquee_path $mediaDir/marquee \
+			-workers 4 \
+			-skip_check \
+			-max_width 320 \
+			-max_height 240 \
+			-console_src=gdb \
+			-mame_src=adb \
+			-use_nointro_name=false \
+			-mame \
+			-mame_img t,m,s \
+			-output_file $platformDir/gamelist.xml \
+			-rom_dir $platformDir
+	fi
+done

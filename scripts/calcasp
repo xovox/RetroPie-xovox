@@ -1,0 +1,10 @@
+#!/bin/bash
+
+
+read -p "width: " width
+read -p "height: " height
+
+echo -n "width: "
+echo "scale=2 ; ($width / 1920) * 1280" | bc
+echo -n "height: "
+echo "scale=2 ; ($height / 1080) * 800" | bc

@@ -1,0 +1,13 @@
+#!/bin/bash
+
+#xrandr --output HDMI2 --mode 640x480
+#xrandr --output HDMI2 --mode 720x480
+#xrandr -o 1 -s 640x480 # ; emulationstation
+
+echo "Are we having fun yet?"
+
+sleep 4
+
+#unclutter -idle 0.01 -root &
+
+emulationstation

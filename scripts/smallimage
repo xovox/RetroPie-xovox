@@ -1,0 +1,14 @@
+#!/bin/bash
+
+size=320x240
+
+getsize() {
+	stat -c "%s" "$1"
+}
+
+
+orig="$1"
+new="$HOME/sm/$orig"
+
+echo "$orig"
+convert -resize $size\> "$orig" "$new"

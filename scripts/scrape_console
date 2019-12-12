@@ -1,0 +1,37 @@
+#!/bin/bash
+
+
+mediadir=$HOME/RetroPie/media
+
+for platformDir in $@ ; do
+	if [ -d "$platformDir" ]; then
+	    echo "$platformDir"
+
+	    platform="$(basename "$platformDir")"
+	    marquee="$mediadir/$platform/marquee"
+	    video="$mediadir/$platform/video"
+	    image="$mediadir/$platform/image"
+
+	    mkdir -pv "$marquee" "$video" "$image"
+
+		/opt/retropie/supplementary/scraper/scraper \
+			-download_images \
+				-img_format png \
+				-image_dir $image \
+				-image_path $image \
+			-download_videos \
+				-video_dir $video \
+				-video_path $video \
+			-download_marquees \
+				-marquee_dir $marquee \
+				-marquee_path $marquee \
+			-output_file $platformDir/gamelist.xml \
+			-rom_dir $platformDir \
+			-workers 4 \
+			-skip_check \
+			-max_width 320 \
+			-max_height 240 \
+			-console_src=ss \
+			-use_nointro_name=false 
+	fi
+done

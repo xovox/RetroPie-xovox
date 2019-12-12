@@ -1,0 +1,3 @@
+#!/bin/bash
+
+basename "$(ps auxwwf | egrep -o "$HOME.*zip$" | uniq | grep RetroPie)"

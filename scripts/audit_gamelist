@@ -1,0 +1,31 @@
+#!/bin/bash
+
+auditDir="$HOME/RetroPie/purged_roms"
+gameList="gamelist.txt"
+
+[ ! -f $gameList ] && exit
+
+auditDir="$auditDir/$(basename "$PWD")"
+romList="$(ls *.zip | sed 's/\.zip$//')"
+
+mkdir -pv "$auditDir"
+
+before="$(ls *.zip | wc -l)"
+for romTgt  in $romList ; do
+	echo -n .
+	grep -wq "^$romTgt" $gameList || mv -v "$romTgt.zip" "$auditDir/"
+done
+
+after="$(ls *.zip | wc -l)"
+
+echo
+echo
+
+cat << EOF | column -t
+before $before
+after $after
+difference $[ $before - $after ]
+EOF
+
+echo
+echo
